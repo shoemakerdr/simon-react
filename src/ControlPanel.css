@@ -1,0 +1,14 @@
+.ControlPanel {
+    margin-top: .5em;
+    width: 10em;
+    height: 10em;
+    position: relative;
+    left: -50%;
+    top: -50%;
+    background-color: white;
+    z-index:1026;
+}
+
+.wrapper {
+    margin: .5em;
+}
