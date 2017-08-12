@@ -1,0 +1,23 @@
+.Slider {
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.switch-path {
+    background-color: black;
+    border: .1em solid gray;
+    width: 3em;
+    height: 1em;
+    display: inline;
+    margin: 0 .2em 0 .2em;
+    position: relative;
+}
+
+.switch {
+    width: 40%;
+    height: 95%;
+    background-color: lightblue;
+    position: absolute;
+}

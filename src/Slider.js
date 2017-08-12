@@ -4,13 +4,15 @@ import './Slider.css';
 class Slider extends Component {
     render() {
         return (
-            <div className='Board'>
-                <div className='green'></div>
-                <div className='red'></div>
-                <div className='yellow'></div>
-                <div className='blue'></div>
+            <div className='Slider'>
+                <p>{' ON'}</p>
+                <div className='switch-path'>
+                    <div className='switch'></div>
+                </div>
+                <p>{'OFF'}</p>
             </div>
         );
     }
 }
 
+export default Slider;
