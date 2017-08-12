@@ -1,14 +1,38 @@
 .ControlPanel {
-    margin-top: .5em;
+    margin: -18.4em 0 0 -5.9em;
     width: 10em;
     height: 10em;
     position: relative;
-    left: -50%;
-    top: -50%;
+    left: auto;
+    top: auto;
     background-color: white;
     z-index:1026;
+    padding: .5em;
+    border-style: solid;
+    border-width:.4em;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .wrapper {
-    margin: .5em;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.count {
+    background-color: red;
+    color: pink;
+    font-size: 1.5em;
+    margin-bottom: .2em;
+    width: 1.5em;
+    padding: .2em 0 .2em 0;
+    top: auto;
+    border-style: solid;
+    border-width: .1em;
+    border-color: black;
 }
