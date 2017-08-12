@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './ControlPanel.css';
+import Slider from './Slider';
 
 class ControlPanel extends Component {
     render() {
@@ -9,7 +10,7 @@ class ControlPanel extends Component {
                     <div className='count'>{this.props.count}</div>
                     <button className='start'>Start</button>
                     <button className='strict'>Strict</button>
-                    <div className='on-off'>On</div>
+                    <Slider />
                 </div>
             </div>
         );
