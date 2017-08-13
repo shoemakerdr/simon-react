@@ -9,7 +9,11 @@ const strictStyle = {
     border: '.1em solid pink'
 }
 
-const notStrictStyle = {}
+const notStrictStyle = {
+    color: 'black',
+    backgroundColor: 'white',
+    border: '.1em solid black'
+}
 
 const isStrictStyle = isStrict => isStrict ? strictStyle : notStrictStyle
 
@@ -21,8 +25,17 @@ const ControlPanel = props => {
             <div className='wrapper'>
                 <div className='count'>{padCount(props.count)}</div>
                 <div className='buttons'>
-                    <button className='start'>Start</button>
-                    <button className='strict' style={isStrictStyle(props.isStrict)}>Strict</button>
+                    <button
+                        className='start'
+                        onClick={props.start}>
+                        {(props.hasStarted && props.isOn) ? 'Reset' : 'Start'}
+                    </button>
+                    <button
+                        className='strict'
+                        style={isStrictStyle(props.isStrict)}
+                        onClick={props.setStrict}>
+                    Strict
+                    </button>
                 </div>
                 <Slider
                     isOn={props.isOn}
