@@ -15,8 +15,6 @@ const notStrictStyle = {
     border: '.1em solid black'
 }
 
-const isStrictStyle = isStrict => isStrict ? strictStyle : notStrictStyle
-
 const padCount = count => (count === '--' || count > 9) ? count : `0${count}`
 
 const ControlPanel = props => {
@@ -32,7 +30,7 @@ const ControlPanel = props => {
                     </button>
                     <button
                         className='strict'
-                        style={isStrictStyle(props.isStrict)}
+                        style={props.isStrict ? strictStyle : notStrictStyle}
                         onClick={props.setStrict}>
                     Strict
                     </button>
