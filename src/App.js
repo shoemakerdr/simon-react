@@ -9,6 +9,7 @@ const simon = simonGame();
 class App extends Component {
     constructor (props) {
         super(props);
+        this.setOnOff = this.setOnOff.bind(this)
         this.state = {
             isOn: false,
             isStrict: false,
@@ -16,13 +17,25 @@ class App extends Component {
             guesses: simon.getGuesses(),
             currentSeries: simon.getCurrent()
         };
-    } 
+    }
 
+    setOnOff () {
+        const onOrOff = this.state.isOn
+        this.setState({
+            isOn: !onOrOff
+        })
+        console.log(this.state.isOn)
+    }
     render () {
         return (
             <div className="App">
                 <Board />
-                <ControlPanel count={this.state.count} />
+                <ControlPanel
+                    count={this.state.count}
+                    isOn={this.state.isOn}
+                    setOnOff={this.setOnOff}
+                    isStrict={this.state.isStrict}
+                />
             </div>
         );
     }
