@@ -1,3 +1,21 @@
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: .3em;
+    background-color: white;
+    border: .1em solid black;
+    margin: 0 .1em 0 .1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: .8em;
+}
+
 .ControlPanel {
     margin: -18.4em 0 0 -5.9em;
     width: 10em;
@@ -14,6 +32,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
 }
 
 .wrapper {
@@ -28,7 +54,7 @@
     background-color: red;
     color: pink;
     font-size: 1.5em;
-    margin-bottom: .2em;
+    margin-bottom: .5em;
     width: 1.5em;
     padding: .2em 0 .2em 0;
     top: auto;
