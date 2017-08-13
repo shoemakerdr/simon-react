@@ -23,16 +23,15 @@ class App extends Component {
     }
 
     setStrict () {
-        const strict = this.state.isStrict
         this.setState({
-            isStrict: !strict
+            isStrict: !this.state.isStrict
         })
     }
 
     setOnOff () {
-        const onOrOff = this.state.isOn
         this.setState({
-            isOn: !onOrOff
+            isOn: !this.state.isOn,
+            hasStarted: !this.state.isOn ? false : this.state.hasStarted
         })
     }
 
