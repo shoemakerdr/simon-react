@@ -10,13 +10,23 @@ class App extends Component {
     constructor (props) {
         super(props);
         this.setOnOff = this.setOnOff.bind(this)
+        this.setStrict = this.setStrict.bind(this)
+        this.start = this.start.bind(this)
         this.state = {
             isOn: false,
             isStrict: false,
+            hasStarted: false,
             count: '--',
             guesses: simon.getGuesses(),
             currentSeries: simon.getCurrent()
-        };
+        }
+    }
+
+    setStrict () {
+        const strict = this.state.isStrict
+        this.setState({
+            isStrict: !strict
+        })
     }
 
     setOnOff () {
@@ -24,8 +34,14 @@ class App extends Component {
         this.setState({
             isOn: !onOrOff
         })
-        console.log(this.state.isOn)
     }
+
+    start () {
+        this.setState({
+            hasStarted: (this.state.isOn && !this.state.hasStarted) ? true : false
+        })
+    }
+
     render () {
         return (
             <div className="App">
@@ -35,6 +51,9 @@ class App extends Component {
                     isOn={this.state.isOn}
                     setOnOff={this.setOnOff}
                     isStrict={this.state.isStrict}
+                    setStrict={this.setStrict}
+                    hasStarted={this.state.hasStarted}
+                    start={this.start}
                 />
             </div>
         );
