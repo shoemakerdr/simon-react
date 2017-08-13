@@ -14,6 +14,7 @@ button {
     align-items: center;
     justify-content: center;
     font-size: .8em;
+    outline: none;
 }
 
 .ControlPanel {
