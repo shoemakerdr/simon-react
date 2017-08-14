@@ -105,12 +105,24 @@ class App extends Component {
         }, 1000);
     }
 
+    winner() {
+        this.setState({
+            count: 'WIN',
+            isReadyForInput: false
+        })
+        setTimeout(() => {
+            this.start()
+        }, 1000);
+    }
+
     checkUserInput(input) {
         if (this.state.isReadyForInput) {
             this.activateSpace(input, 300, 0)
             if (simon.checkGuess(input)) {
                 if (this.state.count === simon.getGuesses()) {
-                    this.updateSeries()
+                    if(simon.getGuesses() === 4)
+                        this.winner()
+                    else this.updateSeries()
                 }
             }
             else this.wrongAnswer()
