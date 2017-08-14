@@ -5,6 +5,9 @@ import './App.css';
 import simonGame from 'simon-game';
 
 const simon = simonGame();
+let intervalID
+let activateID
+let wrongAnswerID
 
 class App extends Component {
     constructor (props) {
@@ -15,23 +18,22 @@ class App extends Component {
         this.playSeries = this.playSeries.bind(this)
         this.activateSpace = this.activateSpace.bind(this)
         this.iterateSeries = this.iterateSeries.bind(this)
-        this.playSeries = this.playSeries.bind(this)
+        this.wrongAnswer = this.wrongAnswer.bind(this)
+        this.checkUserInput = this.checkUserInput.bind(this)
+        this.updateSeries = this.updateSeries.bind(this)
         this.state = {
             isOn: false,
             isStrict: false,
             hasStarted: false,
+            isReadyForInput: false,
             count: '--',
-            guesses: simon.getGuesses(),
-            currentSeries: simon.getCurrent(),
+            guesses: 0,
+            currentSeries: null,
             colors: {
                 green: false,
                 red: false,
                 yellow: false,
                 blue: false
-            },
-            timerIDs: {
-                activate: null,
-                interval: null
             }
         }
     }
@@ -46,34 +48,33 @@ class App extends Component {
         this.setState({
             isOn: !this.state.isOn,
             hasStarted: !this.state.isOn ? false : this.state.hasStarted,
-            count: '--'
+            count: '--',
+            isReadyForInput: false
         })
+        if (this.state.isOn) {
+            clearInterval(intervalID)
+            clearTimeout(activateID)
+            clearTimeout(wrongAnswerID)
+        }
     }
 
     start () {
-        if (this.state.isOn && this.state.hasStarted) {
+        if (this.state.isOn) {
             simon.newSeries()
-            this.setState({
-                count: simon.getCount(),
-                guesses: simon.getGuesses(),
-                currentSeries: simon.getCurrent()
-            })
-            this.playSeries(this.state.currentSeries)
-        }
-        if (this.state.isOn && !this.state.hasStarted) {
             this.setState({
                 hasStarted: true,
                 count: simon.getCount(),
                 guesses: simon.getGuesses(),
                 currentSeries: simon.getCurrent()
             })
-            this.playSeries(this.state.currentSeries)
+            // play current series
+            this.playSeries([1,2,4,3])
         }
     }
 
-    activateSpace(space) {
+    activateSpace(space, timer1, timer2) {
         const color = [null, 'green', 'red', 'yellow', 'blue']
-        const activateID = setTimeout(() => {
+        const activate = setTimeout(() => {
             this.setState({
                 colors: {[color[space]]: true}
             })
@@ -86,31 +87,66 @@ class App extends Component {
                         blue: false
                     }
                 })
-            },1000)
-        },1000)
+            }, timer1)
+        },timer2)
+        activateID = activate
+    }
+
+    wrongAnswer() {
         this.setState({
-            timerIDs: {
-                activate: activateID
+            count: '!!',
+            isReadyForInput: false
+        })
+        setTimeout(() => {
+            this.setState({
+                count: '--'
+            })
+        }, 1000);
+        if (this.state.isStrict) {
+            this.start()
+        }
+        else this.playSeries(this.state.currentSeries)
+    }
+
+    checkUserInput(input) {
+        if (this.state.isReadyForInput) {
+            this.activateSpace(input, 4, 250)
+            if (simon.checkGuess(input)) {
+                if (this.state.count === this.state.guesses) {
+                    this.updateSeries()
+                    this.playSeries()
+                }
             }
+            else this.wrongAnswer()
+        }
+    }
+
+    updateSeries () {
+        simon.next()
+        this.setState({
+            isReadyForInput: false,
+            count: simon.getCount(),
+            guesses: simon.getGuesses(),
+            currentSeries: simon.getCurrent()
         })
     }
 
     iterateSeries (iterator) {
         const next = iterator.next().value
         if (next !== undefined) {
-            this.activateSpace(next[1])
+            this.activateSpace(next[1], 750, 250)
         }
-        else clearInterval(this.timerIDs.interval)
+        else {
+            clearInterval(intervalID)
+            this.setState({
+                isReadyForInput: true
+            })
+        }
     }
 
     playSeries (series) {
         const seriesIterator = series.entries()
-        const intervalID = setInterval(this.iterateSeries(seriesIterator),1000)
-        this.setState({
-            timerIDs: {
-                interval: intervalID
-            }
-        })
+        intervalID = setInterval(() => this.iterateSeries(seriesIterator),1000)
     }
 
     render () {
