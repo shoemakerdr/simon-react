@@ -15,7 +15,7 @@ const notStrictStyle = {
     border: '.1em solid black'
 }
 
-const padCount = count => (count === '--' || count === '!!' || count > 9) ? count : `0${count}`
+const padCount = count => (typeof count === 'number' && count < 10) ? `0${count}` : count
 
 const ControlPanel = props => {
     return (
