@@ -27,8 +27,6 @@ class App extends Component {
             hasStarted: false,
             isReadyForInput: false,
             count: '--',
-            guesses: 0,
-            currentSeries: null,
             colors: {
                 green: false,
                 red: false,
@@ -64,11 +62,8 @@ class App extends Component {
             this.setState({
                 hasStarted: true,
                 count: simon.getCount(),
-                guesses: simon.getGuesses(),
-                currentSeries: simon.getCurrent()
             })
-            // play current series
-            this.playSeries([1,2,4,3])
+            this.playSeries(simon.getCurrent())
         }
     }
 
@@ -98,23 +93,24 @@ class App extends Component {
             isReadyForInput: false
         })
         setTimeout(() => {
-            this.setState({
-                count: '--'
-            })
+            if (this.state.isStrict) {
+                this.start()
+            }
+            else {
+                this.setState({
+                    count: simon.getCount()
+                })
+                this.playSeries(simon.getCurrent())
+            }
         }, 1000);
-        if (this.state.isStrict) {
-            this.start()
-        }
-        else this.playSeries(this.state.currentSeries)
     }
 
     checkUserInput(input) {
         if (this.state.isReadyForInput) {
-            this.activateSpace(input, 4, 250)
+            this.activateSpace(input, 300, 0)
             if (simon.checkGuess(input)) {
-                if (this.state.count === this.state.guesses) {
+                if (this.state.count === simon.getGuesses()) {
                     this.updateSeries()
-                    this.playSeries()
                 }
             }
             else this.wrongAnswer()
@@ -126,9 +122,8 @@ class App extends Component {
         this.setState({
             isReadyForInput: false,
             count: simon.getCount(),
-            guesses: simon.getGuesses(),
-            currentSeries: simon.getCurrent()
         })
+        this.playSeries(simon.getCurrent())
     }
 
     iterateSeries (iterator) {
@@ -153,6 +148,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Board
+                    checkUserInput={this.checkUserInput}
                     colors={this.state.colors}
                     playSeries={this.playSeries}/>
                 <ControlPanel
