@@ -68,6 +68,9 @@ class App extends Component {
     start () {
         if (this.state.isOn) {
             simon.newSeries()
+            clearInterval(intervalID)
+            clearTimeout(activateID)
+            clearTimeout(wrongAnswerID)
             this.setState({
                 hasStarted: true,
                 count: simon.getCount(),
