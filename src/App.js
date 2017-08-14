@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Board from './Board';
 import ControlPanel from './ControlPanel';
 import './App.css';
-import simonGame from 'simon-game';
+import simonGame from './simon-game';
 
 const simon = simonGame();
 let intervalID
