@@ -8,6 +8,14 @@ const simon = simonGame();
 let intervalID
 let activateID
 let wrongAnswerID
+const greenAudio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3')
+const redAudio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3')
+const yellowAudio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3')
+const blueAudio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
+const playSound = soundIndex => {
+    const sounds = [null, greenAudio, redAudio, yellowAudio, blueAudio]
+    sounds[soundIndex].play()
+}
 
 class App extends Component {
     constructor (props) {
@@ -21,6 +29,7 @@ class App extends Component {
         this.wrongAnswer = this.wrongAnswer.bind(this)
         this.checkUserInput = this.checkUserInput.bind(this)
         this.updateSeries = this.updateSeries.bind(this)
+        this.winner = this.winner.bind(this)
         this.state = {
             isOn: false,
             isStrict: false,
@@ -73,6 +82,7 @@ class App extends Component {
             this.setState({
                 colors: {[color[space]]: true}
             })
+            playSound(space)
             setTimeout(() => {
                 this.setState({
                     colors: {
@@ -120,7 +130,7 @@ class App extends Component {
             this.activateSpace(input, 300, 0)
             if (simon.checkGuess(input)) {
                 if (this.state.count === simon.getGuesses()) {
-                    if(simon.getGuesses() === 4)
+                    if(simon.getGuesses() === 20)
                         this.winner()
                     else this.updateSeries()
                 }
