@@ -48,7 +48,7 @@
     "simon game"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "name": "simon-game",
   "repository": {
     "type": "git",
